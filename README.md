@@ -13,6 +13,7 @@ Issues :
 
 2.  Implémenter entrées du formulaire :
     a. Lier les labels aux entrées dans le HTML en utilisant les attributs "for" et "id" dans le code existant. Corriger le code HTML quand nécessaire.
+    
     b. Utiliser du JavaScript pur (pas de jQuery) pour terminer le formulaire :
 
         - Le formulaire doit être valide quand l'utilisateur clique sur "Submit"
