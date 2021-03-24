@@ -39,20 +39,22 @@ const textControl = document.querySelectorAll(".text-control");
 
 function validation(input, span, label, regex){
   
-  //si la valeur de la regex est vérifiée enlever msg d'erreur et mise en forme : 
+  //si la valeur de la regex est vérifiée: enlever msg d'erreur et mise en forme : 
 
   if (regex.test(label.value)){
     span.classList.remove('errorText');
     input.classList.remove('errorInput');
     span.textContent = "";
+    return true
   // si la regex n'est pas vérifiée : afficher message d'erreur et mise en forme
 } else {
     span.classList.add('errorText');
     input.classList.add('errorInput');
+    return false
 }
 }
 
-//====== Validation Prénom ======
+//====== Validation du Prénom ======
 
 const first = document.getElementById("first");
 let missFirst = document.getElementById("missFirst");
@@ -64,7 +66,7 @@ first.addEventListener("input", function(){
  validation(textControl[0], missFirst, first, firstValid);
 });
 
-// ====== Validation Nom =====
+// ====== Validation du Nom =====
 
 const last = document.getElementById("last");
 let missLast = document.getElementById("missLast");
@@ -106,10 +108,12 @@ function validationQuantity(input, span, label){
   if (label.value < 0 || label.value > 99 || label.value == ""){
     span.classList.add('errorText');
     input.classList.add('errorInput');
+    return false
 } else {
   span.classList.remove('errorText');
   input.classList.remove('errorInput');
   span.textContent = "";
+  return true
 }
 }
 
@@ -152,6 +156,18 @@ function checkboxConditions(event, span){
   }
 }
 
+function validationGenerale(event){
+  if( 
+  validation(textControl[0], missFirst, first, firstValid) == false ||
+  validation(textControl[1], missLast, last, lastValid) == false ||
+  validation(textControl[2], missEmail, email, emailValid) == false ||
+  validation(textControl[3], missDate, date, dateValid) == false ||
+  validationQuantity(textControl[4], missQuantity, quantity) == false
+   ){
+    event.preventDefault();
+  }
+}
+
 // ===== validation du formulaire si les checkbox nécessaires sont bien sélectionnées =====
 
 const missLocation = document.getElementById("missLocation");
@@ -160,4 +176,8 @@ const missConditions = document.getElementById("missConditions");
 formValid.addEventListener("click", function(event){
   checkboxLocation(event, missLocation);
   checkboxConditions(event, missConditions);
+  validationGenerale(event);
 });
+
+// ===== Validation que tous les input sont valides avant d'envoyer le formulaire =====
+
