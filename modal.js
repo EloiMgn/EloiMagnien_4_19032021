@@ -12,14 +12,7 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const close = document.querySelector(".close");
-//form elements 
-const first = document.getElementById("first");
-const last = document.getElementById("last");
-const email = document.getElementById("email");
-const date = document.getElementById("birthdate");
-const quantity = document.getElementById("quantity");
-const submitBtn = document.querySelector(".button");
-const textControl = document.querySelectorAll(".text-control");
+
 
 // MODAL
 // launch modal event
@@ -40,109 +33,131 @@ function closeModal() {
 
 // DATA VALIDATIONS 
 
-let formValid = document.getElementById("submitBtn");
+const textControl = document.querySelectorAll(".text-control");
+
+// ===== Fonction générale de validation =====
+
+function validation(input, span, label, regex){
+  
+  //si la valeur de la regex est vérifiée enlever msg d'erreur et mise en forme : 
+
+  if (regex.test(label.value)){
+    span.classList.remove('errorText');
+    input.classList.remove('errorInput');
+    span.textContent = "";
+  // si la regex n'est pas vérifiée : afficher message d'erreur et mise en forme
+} else {
+    span.classList.add('errorText');
+    input.classList.add('errorInput');
+}
+}
+
+//====== Validation Prénom ======
+
+const first = document.getElementById("first");
 let missFirst = document.getElementById("missFirst");
-let firstValid = /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-"\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?$/;
+let firstValid = /^[a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+([-"\s][a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+)?$/;
 
+
+first.addEventListener("input", function(){
+  missFirst.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
+ validation(textControl[0], missFirst, first, firstValid);
+});
+
+// ====== Validation Nom =====
+
+const last = document.getElementById("last");
 let missLast = document.getElementById("missLast");
-let lastValid = /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-"\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?$/;
+let lastValid = /^[a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+([-"\s][a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+)?$/;
 
+last.addEventListener("input", function(){
+  missLast.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
+ validation(textControl[1], missLast, last, lastValid);
+});
+
+
+// ===== Validation de l'email =====
+
+const email = document.getElementById("email");
 let missEmail = document.getElementById("missEmail");
 let emailValid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+
+email.addEventListener("input", function(){
+  missEmail.textContent = "Veuillez entrer un email valide";
+ validation(textControl[2], missEmail, email, emailValid);
+});
+
+// ===== Validation de la date de naissance =====
+
+const date = document.getElementById("birthdate");
 let missDate = document.getElementById("missDate");
-let dateValid = /^\d{2}-\d{2}-\d{4}$/;
+let dateValid = /^\d{4}-\d{2}-\d{2}$/;
 
+
+date.addEventListener("input", function(){
+  missDate.textContent = "Veuillez entrer une date de naissance valide";
+ validation(textControl[3], missDate, date, dateValid);
+});
+
+// ===== Fonction validation nombre de tournois =====
+
+function validationQuantity(input, span, label){
+  if (label.value < 0 || label.value > 99 || label.value == ""){
+    span.classList.add('errorText');
+    input.classList.add('errorInput');
+} else {
+  span.classList.remove('errorText');
+  input.classList.remove('errorInput');
+  span.textContent = "";
+}
+}
+
+// ===== Validation du nombre de concours =====
+
+const quantity = document.getElementById("quantity");
 let missQuantity = document.getElementById("missQuantity");
-let quantityValid = /d/;
 
-let missLocation = document.getElementById("missLocation");
-let location1 = document.getElementById("location1");
-let location2 = document.getElementById("location2");
-let location3 = document.getElementById("location3");
-let location4 = document.getElementById("location4");
-let location5 = document.getElementById("location5");
-let location6 = document.getElementById("location6");
-            
-formValid.addEventListener("click", validation);
 
-function validation(event){
-  validationFirst(event);
-  validationLast(event);
-  validationEmail(event);
-  validationQuantity(event);
-  validationLocation(event);
-}
-//validation first 
-function validationFirst(event){
-    //Si le champ est vide ou incorrect
-    if (firstValid.test(first.value) == false){
-        event.preventDefault();
-        missFirst.textContent = "Le champ Prénom doit comporter un minimum de 2 caractères";
-        missFirst.style.color = "red";
-        missFirst.style.fontSize = "50%";
-        textControl[0].style.border = "solid red 3px";
-    }else{ 
-    }
-}
-// validation last
-function validationLast(event){
-  //Si le champ est vide ou incorrrect
-  if (lastValid.test(last.value) == false){
-      event.preventDefault();
-      missLast.textContent = "Le champ Nom doit comporter un minimum de 2 caractères";
-      missLast.style.color = "red";
-      missLast.style.fontSize = "50%";
-      textControl[1].style.border = "solid red 3px";
-  }else{ 
+quantity.addEventListener("input", function(){
+  missQuantity.textContent = "Veuillez entrer une valeur numérique valide";
+  validationQuantity(textControl[4], missQuantity, quantity);
+});
+
+// ====== Fonction validation checkbox ======
+
+const formValid = document.getElementById("submitBtn");
+const form = document.getElementsByTagName("form");
+
+function checkboxLocation(event, span){
+  // ====== On vérifie si on trouve une radio checked ==== 
+  let location = document.querySelector('.location:checked');
+  let conditions = document.querySelector('.conditions:checked');
+
+  if (location == null) {
+    span.textContent = "Veuillez sélectionner une option";
+    span.classList.add('errorText');
+    event.preventDefault();
   }
 }
-// validation email
-function validationEmail(event){
-  //Si le champ est vide ou incorrect
-  if (emailValid.test(email.value) == false){
-      event.preventDefault();
-      missEmail.textContent = "Veuillez entrer une adresse email valide";
-      missEmail.style.color = "red";
-      missEmail.style.fontSize = "50%";
-      textControl[2].style.border = "solid red 3px";
-  }else{ 
+
+function checkboxConditions(event, span){
+  // ==== On vérifie si la checkbox conditions est checkée ====
+  let conditions = document.querySelector('.conditions:checked');
+
+  if (conditions == null) {
+    span.textContent = "Vous devez vérifier que vous acceptez les termes et conditions.";
+    span.classList.add('errorText');
+    event.preventDefault();
   }
 }
-//validation date de naissance
-/* function validationDate(event){
-  //Si le champ est vide ou incorrect
-  if (dateValid.test(date.value) == false){
-      event.preventDefault();
-      missDate.textContent = "Veuillez entrer une date valide";
-      missDate.style.color = "red";
-      missDate.style.fontSize = "50%";
-      textControl[3].style.border = "solid red 3px";
-  }else{ 
-  }
-} */
 
-// validation nombre de concours
+// ===== validation du formulaire si les checkbox nécessaires sont bien sélectionnées =====
 
- function validationQuantity(event){
-  //Si le champ est vide ou incorrrect
-  if (quantity.value =! 2){
-      event.preventDefault();
-      missQuantity.textContent = "Le champ  doit avoir un minimum de 2 caractères";
-      missQuantity.style.color = "red";
-      missQuantity.style.fontSize = "50%";
-      textControl[3].style.border = "solid red 3px";
-  }else{ 
-  }
-} 
+const missLocation = document.getElementById("missLocation");
+const missConditions = document.getElementById("missConditions");
 
-function validationLocation(event){
-  //Si le champ est vide ou incorrrect
-  if ((location1.checked == false)&&(location2.checked == false)&&(location3.checked == false)&&(location4.checked == false)&&(location5.checked == false)&&(location6.checked == false)){
-      event.preventDefault();
-      missLocation.textContent = "Veuillez sélectionner une option";
-      missLocation.style.color = "red";
-      missLocation.style.fontSize = "50%";
-  }else{ 
-  }
-}
+formValid.addEventListener("click", function(event){
+  checkboxLocation(event, missLocation);
+  checkboxConditions(event, missConditions);
+});
