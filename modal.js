@@ -14,12 +14,18 @@ const formData = document.querySelectorAll(".formData");
 const close = document.querySelector(".close");
 
 
+
 // MODAL
 // launch modal event
-modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
+modalBtn.forEach((btn) => btn.addEventListener("click", function(){
+  launchModal();
+}));
 
 // close modal event
-close.addEventListener("click", closeModal);
+close.addEventListener("click", function(){
+  closeModal();
+  closeConfirmation();
+});
 
 // launch modal form
 function launchModal() {
@@ -29,6 +35,28 @@ function launchModal() {
 // close modal form
 function closeModal() {
   modalbg.style.display = "none";
+}
+
+
+// ===================== Confirmation ============================
+
+const confirmationbg = document.getElementById("confirmation");
+const closeConf = document.querySelector(".closeConfirmation");
+
+// launch confirmation event
+
+// close confirmation event
+closeConf.addEventListener("click", closeConfirmation);
+
+// launch confirmation form
+
+function launchConfirmation(){
+  confirmationbg.style.display = "block";
+}
+
+// close confirmation form
+function closeConfirmation() {
+  confirmationbg.style.display = "none";
 }
 
 // DATA VALIDATIONS 
@@ -176,6 +204,10 @@ function validationGenerale(event) {
     validationQuantity(textControl[4], missQuantity, quantity) == false
   ) {
     event.preventDefault();
+    
+  } else{
+
+    launchConfirmation();
   }
 }
 
@@ -190,3 +222,6 @@ formValid.addEventListener("click", function (event) {
   checkboxConditions(event, missConditions);
   validationGenerale(event);
 });
+
+// ===== Envoi du formulaire et message de confirmation =====
+
