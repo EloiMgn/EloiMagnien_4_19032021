@@ -198,43 +198,28 @@ quantity.addEventListener("input", function () {
   });
 
 
-  function radioValidation () {
+  function checkboxValidation () {
     
+    let conditions = document.querySelector('.conditions:checked');
     let loc = document.querySelector('.location:checked');
     const missLocation = document.getElementById("missLocation");
+    const missConditions = document.getElementById("missConditions");
 
-    if (loc){
+    if (loc && conditions){
         result.location.statut = true;
         result.location.data = loc.value;
-        missLocation.textContent = "";
-        missLocation.classList.remove('errorText');
+        result.conditions.statut = true;
+
     } else {
+        result.conditions.statut = false;
         missLocation.textContent = "Veuillez sélectionner une option";
         missLocation.classList.add('errorText');
-      }
+        missConditions.textContent = "Vous devez vérifier que vous acceptez les termes et conditions.";
+        missConditions.classList.add('errorText');
     }
-
-    function checkboxValidation () {
-    
-      let conditions = document.querySelector('.conditions:checked');
-      const missConditions = document.getElementById("missConditions");
+  }
   
-      if (conditions){
-          result.conditions.statut = true;
-          missConditions.textContent = "";
-          missConditions.classList.remove('errorText');
-      } else {
-          result.conditions.statut = false;
-          missConditions.textContent = "Vous devez vérifier que vous acceptez les termes et conditions.";
-          missConditions.classList.add('errorText');
-        }
-      }
-    
-
-
-
-
-    function inputValidation () {
+  function inputValidation () {
     var flag = true;
     for(let i in result){
         if(result[i].statut == false){
@@ -246,7 +231,6 @@ quantity.addEventListener("input", function () {
 
   formValid.addEventListener("click", function(event){
     event.preventDefault();
-    radioValidation ();
     checkboxValidation();
     let finalResult = inputValidation();
     if(finalResult == true){
