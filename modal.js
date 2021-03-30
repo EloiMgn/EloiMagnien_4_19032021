@@ -1,3 +1,4 @@
+// DOM Modal
 
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
@@ -5,7 +6,7 @@ const closebtn = document.querySelector(".close");
 const formValid = document.getElementById("submitBtn");
 
 
-// Input :
+// DOM Input :
 
 const birthdate = document.getElementById("birthdate");
 const email = document.getElementById("email");
@@ -13,12 +14,13 @@ const first = document.getElementById("first");
 const last = document.getElementById("last");
 const quantity = document.getElementById("quantity");
 
-// Checkbox :
 
-// confirmation 
+// DOM confirmation 
+
 const closeConf = document.querySelector(".closeConfirmation");
 const confirmationbg = document.getElementById("confirmation");
 
+// Récupération des données entrées dans le formulaire
 let result = {
     "first" :{
         "statut" : false,
@@ -115,7 +117,9 @@ function validation(input, span, regex) {
       input.classList.remove('errorInput');
       span.textContent = "";
         result[input.id].statut=true;
+
       // si la regex n'est pas vérifiée : afficher message d'erreur et mise en forme
+
     } else {
       span.classList.add('errorText');
       input.classList.add('errorInput');
@@ -126,11 +130,11 @@ function validation(input, span, regex) {
   //====== Validation du Prénom ======
 
 
-
 first.addEventListener("input", function () {
   
     let missFirst = document.getElementById("missFirst");
     let firstValid = /^[a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+([-"\s][a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+)?$/;
+
     missFirst.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
     validation(first, missFirst, firstValid);
   });
@@ -142,6 +146,7 @@ last.addEventListener("input", function () {
   
     let missLast = document.getElementById("missLast");
     let lastValid = /^[a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+([-"\s][a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+)?$/;
+
     missLast.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
     validation(last, missLast, lastValid);
   });
@@ -166,6 +171,7 @@ last.addEventListener("input", function () {
     
     let missDate = document.getElementById("missDate");
     let dateValid = /^\d{4}-\d{2}-\d{2}$/;
+
     missDate.textContent = "Veuillez entrer une date de naissance valide";
     validation(birthdate, missDate, dateValid);
   });
@@ -175,6 +181,7 @@ last.addEventListener("input", function () {
 function validationQuantity(input, span) {
     result[input.id].data=input.value;
     if (input.value < 0 || input.value > 99 || input.value == "") {
+      // si le nombre de tournoi est non rempli, inférieur à 0 ou supérieur à 99 :
       span.classList.add('errorText');
       input.classList.add('errorInput');
       result[input.id].statut=false;
@@ -197,33 +204,41 @@ quantity.addEventListener("input", function () {
     
   });
 
+  // ===== Validation de la sélection de la ville ===== 
 
   function radioValidation () {
+  
+    let loc = document.querySelector('.location:checked'); // recherche d'au moins 1 input sélectionné
     
-    let loc = document.querySelector('.location:checked');
     const missLocation = document.getElementById("missLocation");
 
     if (loc){
+      // si la variable loc existe : 
         result.location.statut = true;
         result.location.data = loc.value;
         missLocation.textContent = "";
         missLocation.classList.remove('errorText');
     } else {
+      // si la variable loc n'existe pas : 
         missLocation.textContent = "Veuillez sélectionner une option";
         missLocation.classList.add('errorText');
       }
     }
 
+     // ===== Validation de la sélection des conditions d'utilisation ===== 
+
     function checkboxValidation () {
     
-      let conditions = document.querySelector('.conditions:checked');
+      let conditions = document.querySelector('.conditions:checked'); // recherche d'au moins 1 input sélectionné
       const missConditions = document.getElementById("missConditions");
   
       if (conditions){
+        // si la variable conditions existe : 
           result.conditions.statut = true;
           missConditions.textContent = "";
           missConditions.classList.remove('errorText');
       } else {
+        // si la variable conditions n'existe pas : 
           result.conditions.statut = false;
           missConditions.textContent = "Vous devez vérifier que vous acceptez les termes et conditions.";
           missConditions.classList.add('errorText');
@@ -233,16 +248,22 @@ quantity.addEventListener("input", function () {
 
 
 
+ // ===== Validation des données entrée dans le formulaire au moment de l'envoi ===== 
 
     function inputValidation () {
     var flag = true;
     for(let i in result){
         if(result[i].statut == false){
             flag = false;
+            // si une valeur est retournée fausse dans l'objet des résultats, le formulaire ne peut pas être envoyé
         }
     }
     return flag;
   }
+
+// ===== validation finale et application des fonctions de 
+//       validation des checkbox + fermeture du fomulaire 
+//       et apparition du message de confirmation ======
 
   formValid.addEventListener("click", function(event){
     event.preventDefault();
