@@ -20,7 +20,7 @@ const quantity = document.getElementById("quantity");
 const closeConf = document.querySelector(".closeConfirmation");
 const confirmationbg = document.getElementById("confirmation");
 
-// Récupération des données entrées dans le formulaire
+// Récupération des données entrées dans le formulaire === Objet compilant les résultats obtenus. 
 let result = {
     "first" :{
         "statut" : false,
@@ -49,7 +49,10 @@ let result = {
     "location": {
         "statut": false,
         "data": null
-    }
+    },
+    "newsletter": {
+      "data": null
+  }
 
 };
 
@@ -193,7 +196,7 @@ function validationQuantity(input, span) {
     }
   }
 
-  // ===== Validation du nombre de concours =====
+  // ===== Validation du nombre de tournois =====
 
 
 quantity.addEventListener("input", function () {
@@ -244,6 +247,20 @@ quantity.addEventListener("input", function () {
           missConditions.classList.add('errorText');
         }
       }
+
+    // ===== validation (non requise pour envoi) de la sélection de la checkbox newsletter ==== 
+      function newsletterCheck () {
+    
+        let newsletter = document.querySelector('.newsletter:checked'); // recherche d'au moins 1 input sélectionné
+    
+        if (newsletter){
+          // si la variable conditions existe : 
+            result.newsletter.data = 1;
+        } else {
+          // si la variable conditions n'existe pas : 
+            result.newsletter.data = 0;
+          }
+        }
     
 
 
@@ -269,6 +286,7 @@ quantity.addEventListener("input", function () {
     event.preventDefault();
     radioValidation ();
     checkboxValidation();
+    newsletterCheck ();
     let finalResult = inputValidation();
     if(finalResult == true){
         closeModal();
