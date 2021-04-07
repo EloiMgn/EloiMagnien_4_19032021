@@ -277,6 +277,18 @@ quantity.addEventListener("input", function () {
     }
     return flag;
   }
+// ===== fonction remise des input à zéro =====
+  function raz () {
+    birthdate.value="";
+    email.value="";
+    first.value="";
+    last.value="";
+    quantity.value="";
+  }
+
+  // if(radioelement.checked){
+  //   radioelement.checked =false;
+  // }
 
 // ===== validation finale et application des fonctions de 
 //       validation des checkbox + fermeture du fomulaire 
@@ -292,5 +304,6 @@ quantity.addEventListener("input", function () {
         closeModal();
         launchConfirmation();
         console.log(result);
+        raz();
     }
   });

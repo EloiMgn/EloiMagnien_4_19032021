@@ -34,7 +34,7 @@ img {
 
 .topnav {
   overflow: hidden;
-  margin: 3.5%;
+  margin: 5.5%;
 }
 
 .header-logo {
@@ -42,11 +42,11 @@ img {
 }
 
 .main-navbar {
-  float: right;
+  float: right; 
 }
 
 .topnav a {
-  float: left;
+  float: right;
   display: block;
   color: #000000;
   text-align: center;
@@ -81,10 +81,8 @@ img {
   .topnav a.icon {
     float: right;
     display: block;
+    margin: 5px;
   }
-}
-
-@media screen and (max-width: 768px) {
   .topnav.responsive {
     position: relative;
   }
@@ -93,6 +91,7 @@ img {
     position: absolute;
     right: 0;
     top: 0;
+    
   }
 
   .topnav.responsive a {
@@ -102,17 +101,20 @@ img {
   }
 }
 
-
-
 @media screen and (max-width: 540px) {
   .topnav a {
     display: none;
+    font-size: 30px;
+    margin: 20px;
   }
 
   .topnav a.icon {
     float: right;
     display: block;
-    margin-top: -15px;
+  }
+  .topnav.responsive {
+    position: relative;
+    height: 70vh;
   }
 }
 
@@ -608,7 +610,7 @@ footer {
   .hero-content {
     background: #fff;
     color: #000;
-    padding: 20px;
+    padding: 0;
   }
 
   .hero-content::after {
@@ -625,7 +627,7 @@ footer {
   }
 
   .hero-text {
-    width: unset;
+    width: 90vw;
     font-size: 1.5rem;
   }
 
