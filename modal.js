@@ -286,9 +286,16 @@ quantity.addEventListener("input", function () {
     quantity.value="";
   }
 
-  // if(radioelement.checked){
-  //   radioelement.checked =false;
-  // }
+  // ===== fonction de remise à zéro des checkbox radio et newsletter ====
+
+  function radioRaz(){
+    let loc = document.querySelector('.location:checked');
+    let newsletter = document.querySelector('.newsletter:checked');
+    if(loc, newsletter){
+      loc.checked=false;
+      newsletter.checked=false;
+    } 
+  }
 
 // ===== validation finale et application des fonctions de 
 //       validation des checkbox + fermeture du fomulaire 
@@ -305,5 +312,6 @@ quantity.addEventListener("input", function () {
         launchConfirmation();
         console.log(result);
         raz();
+        radioRaz()
     }
   });
