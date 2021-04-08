@@ -66,6 +66,8 @@ function editNav() {
     }
   }
 
+  
+
 // MODAL
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", function(){
