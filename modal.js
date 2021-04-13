@@ -14,7 +14,18 @@ const first = document.getElementById("first");
 const last = document.getElementById("last");
 const quantity = document.getElementById("quantity");
 
+//DOM error : 
+let missQuantity = document.getElementById("missQuantity");
+let missFirst = document.getElementById("missFirst");
+let missLast = document.getElementById("missLast");
+let missEmail = document.getElementById("missEmail");
+let missDate = document.getElementById("missDate");
 
+// REGEX :
+let firstValid = /^[a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+([-"\s][a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+)?$/;
+let lastValid = /^[a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+([-"\s][a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+)?$/;
+let emailValid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+let dateValid = /^\d{4}-\d{2}-\d{2}$/;
 // DOM confirmation 
 
 const closeConf = document.querySelector(".closeConfirmation");
@@ -136,10 +147,6 @@ function validation(input, span, regex) {
 
 
 first.addEventListener("input", function () {
-  
-    let missFirst = document.getElementById("missFirst");
-    let firstValid = /^[a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+([-"\s][a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+)?$/;
-
     missFirst.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
     validation(first, missFirst, firstValid);
   });
@@ -148,10 +155,6 @@ first.addEventListener("input", function () {
 
 
 last.addEventListener("input", function () {
-  
-    let missLast = document.getElementById("missLast");
-    let lastValid = /^[a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+([-"\s][a-zA-ZéèîïÉÈÎÏ][a-zA-Zéèêàçîï]+)?$/;
-
     missLast.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
     validation(last, missLast, lastValid);
   });
@@ -161,10 +164,6 @@ last.addEventListener("input", function () {
 
   
   email.addEventListener("input", function () {
-    
-  let missEmail = document.getElementById("missEmail");
-  let emailValid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  
   missEmail.textContent = "Veuillez entrer un email valide";
     validation(email, missEmail, emailValid);
   });
@@ -173,10 +172,6 @@ last.addEventListener("input", function () {
   
   
   birthdate.addEventListener("input", function () {
-    
-    let missDate = document.getElementById("missDate");
-    let dateValid = /^\d{4}-\d{2}-\d{2}$/;
-
     missDate.textContent = "Veuillez entrer une date de naissance valide";
     validation(birthdate, missDate, dateValid);
   });
@@ -199,12 +194,10 @@ function validationQuantity(input, span) {
   }
 
   // ===== Validation du nombre de tournois =====
-
+  
 
 quantity.addEventListener("input", function () {
-  
-    let missQuantity = document.getElementById("missQuantity");
-    missQuantity.textContent = "Veuillez entrer une valeur numérique valide";
+  missQuantity.textContent = "Veuillez entrer une valeur numérique valide";
     validationQuantity(quantity, missQuantity);
     
   });
@@ -276,7 +269,7 @@ quantity.addEventListener("input", function () {
         if(result[i].statut == false){
             flag = false;
             // si une valeur est retournée fausse dans l'objet des résultats, le formulaire ne peut pas être envoyé
-        }
+        } 
     }
     return flag;
   }
@@ -306,15 +299,32 @@ quantity.addEventListener("input", function () {
 
   formValid.addEventListener("click", function(event){
     event.preventDefault();
+//============= Validation du prénom =====
+    missFirst.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
+    validation(first, missFirst, firstValid);
+//============= Validation du nom =====
+    missLast.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
+    validation(last, missLast, lastValid);
+//============= Validation de l'email =====
+    missEmail.textContent = "Veuillez entrer un email valide";
+    validation(email, missEmail, emailValid);
+//============= validation de la date ======
+    missDate.textContent = "Veuillez entrer une date de naissance valide";
+    validation(birthdate, missDate, dateValid);
+//============= validation du nombre de tournois =====
+    missQuantity.textContent = "Veuillez entrer une valeur numérique valide";
+    validationQuantity(quantity, missQuantity);
+//============= validation des checkbox ===== 
     radioValidation ();
     checkboxValidation();
     newsletterCheck ();
+// ========== validation du formulaire ======
     let finalResult = inputValidation();
     if(finalResult == true){
-        closeModal();
-        launchConfirmation();
-        console.log(result);
-        raz();
-        radioRaz();
+        closeModal(); // fermeture de la modale
+        launchConfirmation(); // ouverture de la confirmation
+        console.log(result); // affichage du résultat dans la console 
+        raz(); // remise à 0 des inputs
+        radioRaz(); // remise à 0 des checkbox
     }
   });

@@ -292,6 +292,10 @@ input {
   outline: none;
 }
 
+#birthdate:hover{
+  cursor: text;
+}
+
 .text-control {
   margin: 0;
   padding: 8px;
@@ -334,6 +338,7 @@ input[data-error]::after {
   margin-left: 36px;
   font-size: 12px;
   font-weight: normal;
+  cursor: pointer;
 }
 
 .checkbox-label .checkbox-icon,
