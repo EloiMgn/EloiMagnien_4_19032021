@@ -225,6 +225,7 @@ quantity.addEventListener("input", function () {
         missLocation.classList.remove('errorText');
     } else {
       // si la variable loc n'existe pas : 
+        result.location.statut = false;
         missLocation.textContent = "Veuillez sélectionner une option";
         missLocation.classList.add('errorText');
       }
@@ -293,7 +294,7 @@ quantity.addEventListener("input", function () {
   function radioRaz(){
     let loc = document.querySelector('.location:checked');
     let newsletter = document.querySelector('.newsletter:checked');
-    if(loc, newsletter){
+    if(loc || newsletter){
       loc.checked=false;
       newsletter.checked=false;
     } 
@@ -314,6 +315,6 @@ quantity.addEventListener("input", function () {
         launchConfirmation();
         console.log(result);
         raz();
-        radioRaz()
+        radioRaz();
     }
   });
